@@ -1,6 +1,7 @@
-const shelfReducer = (state = [], action) => {
+const shelf = (state = [], action) => {
   switch (action.type) {
-    case "SET_SELF":
+    case "SET_SHELF":
+      console.log("In the shelf reducer");
       return action.payload;
     default:
       return state;
@@ -9,4 +10,4 @@ const shelfReducer = (state = [], action) => {
 
 // user will be on the redux state at:
 // state.shelf
-export default shelfReducer;
+export default shelf;
