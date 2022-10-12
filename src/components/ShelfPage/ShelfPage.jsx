@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import AddToShelf from "../AddToShelf/AddToShelf";
 
 function ShelfPage() {
   const dispatch = useDispatch();
@@ -12,6 +13,7 @@ function ShelfPage() {
 
   return (
     <div className="container">
+      <AddToShelf />
       <h2>Shelf</h2>
       {shelfContents.map((item, index) => (
         <li key={index}>
