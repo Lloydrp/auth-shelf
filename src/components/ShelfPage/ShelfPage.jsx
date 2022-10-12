@@ -20,6 +20,7 @@ function ShelfPage() {
           <img src={item.image_url} />
           <br />
           {item.description} posted by {item.user_id}
+          <button onClick={() => dispatch({type: 'DELETE_ITEM', payload: {id: item.id, userid: item.user_id}})}>Delete</button>
         </li>
       ))}
     </div>
