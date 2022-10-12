@@ -8,7 +8,7 @@ const router = express.Router();
 router.get('/', (req, res) => {
   let queryText = 'SELECT * FROM "item" ORDER by "id";';
   pool.query(queryText).then(results => {
-    res.send(result.rows);
+    res.send(results.rows);
   })
   .catch(error => {
     console.log('error in getting items', error);
