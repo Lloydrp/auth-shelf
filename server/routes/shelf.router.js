@@ -1,11 +1,14 @@
 const express = require("express");
+const {
+  rejectUnauthenticated,
+} = require("../modules/authentication-middleware");
 const pool = require("../modules/pool");
 const router = express.Router();
 
 /**
  * Get all of the items on the shelf
  */
-router.get("/", (req, res) => {
+router.get("/", rejectUnauthenticated, (req, res) => {
   let queryText = 'SELECT * FROM "item" ORDER by "id";';
   pool
     .query(queryText)
