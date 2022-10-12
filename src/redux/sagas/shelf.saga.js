@@ -26,9 +26,14 @@ function* addToShelf(action) {
 }
 
 function* deleteItem(action) {
-  console.log('in Delete Item');
-  console.log(action);
-  // yield axios.delete(`/api/shelf/${action}`)
+  try {
+    yield console.log('in Delete Item');
+    yield console.log(action.payload);
+    yield axios.delete(`/api/shelf/${action.payload.id}`);
+    yield put({type: 'SET_SHELF_LIST'});
+  } catch(err) {
+    console.log('Error in delete saga', err);
+  }
 }
 
 function* fetchShelf() {
