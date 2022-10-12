@@ -15,8 +15,19 @@ function* setShelfList(action) {
   }
 }
 
+function* addToShelf(action) {
+  try {
+    console.log('in addToShelf:');
+    yield axios.post('/api/shelf/', action.payload);
+    yield put({ type: 'SET_SHELF_LIST'});
+  } catch (err) {
+    console.log('Error in adding new item: ', err);
+  }
+}
+
 function* fetchShelf() {
   yield takeLatest("SET_SHELF_LIST", setShelfList);
+  yield takeLatest('ADD_TO_SHELF', addToShelf);
 }
 
 export default fetchShelf;
