@@ -33,9 +33,7 @@ function* deleteItem(action) {
     yield put({type: 'SET_SHELF_LIST'});
   } catch(err) {
     console.log('Error in delete saga', err);
-    // if(err.status === 401) {
-    //   yield alert('You are unauthorized :(');
-    // }
+    yield put({type: 'BAD_DELETE', payload: err});
   }
 }
 
