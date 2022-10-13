@@ -35,6 +35,8 @@ const registrationMessage = (state = '', action) => {
 // create reducer to handle delete message.
 const deleteMessage = (state = '', action) => {
   switch(action.type) {
+    case 'CLEAR_DELETE':
+      return '';
     case 'BAD_DELETE':
       return 'You are unauthorized :(';
     default:
