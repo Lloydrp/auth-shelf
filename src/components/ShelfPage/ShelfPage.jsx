@@ -5,6 +5,8 @@ import AddToShelf from "../AddToShelf/AddToShelf";
 function ShelfPage() {
   const dispatch = useDispatch();
   const shelfContents = useSelector((store) => store.shelf);
+  // get the current user id from redux store.
+  const userid = useSelector(store => store.user.id);
   console.log("shelfContents :>> ", shelfContents);
 
   useEffect(() => {
@@ -20,6 +22,8 @@ function ShelfPage() {
           <img src={item.image_url} />
           <br />
           {item.description} posted by {item.user_id}
+          {/* conditionally render per user */}
+          {userid === item.user_id && <button onClick={() => dispatch({type: 'DELETE_ITEM', payload: {id: item.id}})}>Delete</button>}
         </li>
       ))}
     </div>

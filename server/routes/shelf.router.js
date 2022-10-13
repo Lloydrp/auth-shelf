@@ -42,8 +42,43 @@ router.post("/", rejectUnauthenticated, (req, res) => {
 /**
  * Delete an item if it's something the logged in user added
  */
-router.delete("/:id", (req, res) => {
+router.delete("/:id", rejectUnauthenticated, (req, res) => {
   // endpoint functionality
+  const itemid = req.params.id;
+  // query to get the user id of the item to be deleted.
+  const queryText2 = `SELECT "user_id" FROM "item" WHERE "id"=$1;`;
+  pool.query(queryText2, [itemid])
+  .then(response => {
+
+    // console.log(response.rows[0].user_id);
+    // store the selected item's user id into a variable for the check.
+    const itemUserId = response.rows[0].user_id;
+    // check if the item's user_id is the same as the logged in user's id.
+    if(itemUserId === req.user.id) {
+      // if id's match then user is authorized to delete that item.
+      // res.status(200).send('You are authorized ;)');
+      const queryText = `DELETE FROM "item"
+      WHERE "id"=$1 AND "user_id"=$2;`;
+
+      pool.query(queryText, [itemid, req.user.id])
+      .then(() => {
+        res.status(200);
+      })
+      .catch(err => {
+        // ERROR for nested query / delete query.
+        console.log(`Error deleting item with id:${itemid}`, err);
+        res.sendStatus(500);
+      });
+    } else {
+      // If the id's do not match notify the system that the user is unauthorized.
+      res.status(401).send('You are unauthorized :(');
+    }
+  })
+  .catch(err => {
+    // ERROR for query to get item's user id.
+    console.log('error getting user id of the item to be deleted', err);
+    res.sendStatus(500);
+  });
 });
 
 /**

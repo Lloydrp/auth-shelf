@@ -25,9 +25,22 @@ function* addToShelf(action) {
   }
 }
 
+function* deleteItem(action) {
+  try {
+    // yield console.log('in Delete Item');
+    // yield console.log(action.payload);
+    yield axios.delete(`/api/shelf/${action.payload.id}`);
+    yield put({type: 'SET_SHELF_LIST'});
+  } catch(err) {
+    console.log('Error in delete saga', err);
+    // yield put({type: 'BAD_DELETE', err});
+  }
+}
+
 function* fetchShelf() {
   yield takeLatest("SET_SHELF_LIST", setShelfList);
   yield takeLatest('ADD_TO_SHELF', addToShelf);
+  yield takeLatest('DELETE_ITEM', deleteItem);
 }
 
 export default fetchShelf;

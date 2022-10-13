@@ -32,10 +32,23 @@ const registrationMessage = (state = '', action) => {
   }
 };
 
+// create reducer to handle delete message.
+const deleteMessage = (state = '', action) => {
+  switch(action.type) {
+    case 'CLEAR_DELETE':
+      return '';
+    case 'BAD_DELETE':
+      return 'You are unauthorized :(';
+    default:
+      return state;
+  }
+}
+
 // make one object that has keys loginMessage, registrationMessage
 // these will be on the redux state at:
 // state.errors.loginMessage and state.errors.registrationMessage
 export default combineReducers({
   loginMessage,
   registrationMessage,
+  deleteMessage,
 });
