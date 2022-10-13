@@ -56,7 +56,7 @@ router.delete("/:id", rejectUnauthenticated, (req, res) => {
     // check if the item's user_id is the same as the logged in user's id.
     if(itemUserId === req.user.id) {
       // if id's match then user is authorized to delete that item.
-      res.status(200).send('You are authorized ;)');
+      // res.status(200).send('You are authorized ;)');
       const queryText = `DELETE FROM "item"
       WHERE "id"=$1 AND "user_id"=$2;`;
 
